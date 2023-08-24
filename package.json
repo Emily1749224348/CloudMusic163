@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.22.10",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.22.10"
+  },
+  "scripts":{
+    "build":"babel src/index.js --out-file dist index.js"
+  }
+}

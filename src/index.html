@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网易云音乐</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <button @click="jump">跳转</button>
+    </div>
+    <ul>
+        <li>
+            <a href="/search?keywords=lover">搜索lover</a>
+        </li>
+    </ul>
+    
+<script>
+    const url = "https://netease-cloud-music-gja3m9j9w-emily1749224348.vercel.app";
+  /*  fetch(url+"/search?keywords=海阔天空").then(function(response){
+        console.log(response);
+    })*/
+ const xhr = new XMLHttpRequest();
+  //2.初始化 设置请求方法和url
+  xhr.open("GET",url+"/search?keywords=海阔天空");
+  //3.发送
+  xhr.send();
+  //4.事件绑定 处理服务端返回的结果
+  // on  当什么的时候
+  // readystate 是 xhr 对象中的属性，表示状态 0 1 2 3 4
+  // 0表示未初始化  1表示open方法调用完毕  2表示send方法调用完毕
+  // 3表示服务端返回了部分结果  4表示服务端返回了所有结果
+  xhr.onreadystatechange = function(){
+      //判断 （服务端返回了所有结果）
+    if(xhr.readyState === 4 ){
+        //判断响应状态码 200 404 403 401 500
+        //2开头就表示成功
+      if(xhr.status>=200 && xhr.status<300){
+          //处理结果
+          //行  头  空行   体 
+          //console.log(xhr.status);//状态码
+//          console.log(xhr.statusText);//响应字符串
+  //        console.log(xhr.getAllResponseHeaders());//所有响应
+          console.log(JSON.parse(xhr.response));//响应体
+		 
+      } 
+      }else{
+        console.log('failed');
+      }
+    }
+   const app = new Vue({
+    el:"#app",
+    data:{
+
+    },
+    methods:{
+     jump(){
+      this.$router.push({path:"/search.html"});
+
+     },
+    }
+   })
+</script>
+</body>
+</html>
