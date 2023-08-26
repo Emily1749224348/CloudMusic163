@@ -6,6 +6,7 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    // hello world 页面
     {
       path: '/',
       name: 'HelloWorld',
