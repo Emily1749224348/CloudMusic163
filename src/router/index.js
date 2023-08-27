@@ -1,15 +1,92 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+/*以下引入各种组件 */
+//hello world 弃用
 import HelloWorld from '@/components/HelloWorld'
+/*一级路由 */
+//主页面，默认页面---->一级：发现音乐 -----> 二级：每日推荐
+import index from "../components/body//discover/body.vue"
+//我的音乐   个人详情页
+import my from "../components/body/my/my.vue"
+//关注
+import friend from "../components/body/friend/friend.vue"
+//--------------商城 store------------
+// import store from "../"
+//--------------下载客户端------------
+import download from "../components/body/download/download.vue"
 
+/*一级路由结束 */
+/*二级路由 */
+//每日推荐
+import recommend from "../components/body/discover/recommend/recommend.vue"
+/**二级路由 */
+
+//路由！！！
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path:"/",
+      redirect:"/discover"
+    },
+    {//发现音乐
+      path: '/discover',
+      // name: 'index_page',
+      component: index,
+      children:[
+        //推荐  ---------- 二级路由 默认页
+        {path:"",name:"recommend",component:recommend}
+        //二级路由 ----------排行榜
+       , {path:"toplist",name:"toplist", component:()=>{return import("../components/body/discover/toplist/toplist.vue") }},
+        //二级路由     ---------- 歌单
+        {
+          path:"playlist",name:"playlist", component:()=>{return import("../components/body/discover/playlist/playlist.vue")}
+        },
+        //二级路由--------主播电台
+        {
+          path:"djradio",name:"djradio", component:()=>{return import("../components/body/discover/djradio/toplist.vue")}
+        },
+        //二级路由-------歌手
+        {
+          path:"artist" ,name:"artist",component:()=>{return import("../components/body/discover/artist/artist.vue")}
+        },
+        //二级路由--------------------新碟上架---------------
+        {
+          path:"album", name:"album", component:()=>{return import("../components/body/discover/album/album.vue")}
+        },
+      ]
+    },
+    {//我的音乐
+      path:"/my",
+      name:"my",
+      component:my,
+    },
+    {//关注
+      path:"/friend",
+      name:"friend",
+      component:friend,
+    },
+    {//商城
+      path:"/musician",
+      name:"musician",
+      component:()=>{return import("../components/body/musician/musician.vue")}
+    },
+   {//云推歌  add_song
+    path:"/addSong",
+    name:"addSong",//yun tui ge
+    component:()=>{return import("../components/body/add_song/add_song.vue")}
+   },
+   {//商城 store
+    path:"/store",
+    name:"store",
+    component:()=>{return import("../components/body/store/store.vue")}
+   },
+   {
+      path:"/download",
+      name:"download",
+      component:download,
     }
-  ]
+  ],
+  mode:"history"
 })
