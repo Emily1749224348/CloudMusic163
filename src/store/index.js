@@ -2,10 +2,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
- 
+
 // 用来存储数据
 const state = {
- 
+    isLogin:false,
+    user:{
+        isLogin:false,
+        account:{},
+        
+    },
+    // CloudMusicApi:"https://api.hanling.space/"
+    CloudMusicApi:"https://netease-cloud-music-api-xi-tawny-81.vercel.app",
 }
 // 响应组件中的事件
 const actions = {

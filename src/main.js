@@ -4,6 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store/index'
+import axios from "axios"
+import ElementUI from "element-ui"
+
+Vue.use(ElementUI);
+Vue.prototype.$axios = axios;
 
 Vue.config.productionTip = false
 
@@ -12,5 +17,6 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  store
 })
