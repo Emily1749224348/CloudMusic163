@@ -1,90 +1,42 @@
 <template>
     <div id="login">
        
-    <li class="main_item" v-for="(item,index) in menulist" :key="index"
-        @mouseover="item.show=!item.show"
-        @mouseout="item.show=!item.show">
-        <a :href="item.url">{{ item.name }}</a> 
-        <ul v-show="item.show">
-        <li v-for="(subitem,index) in item.subMenus" :key="index">
-            <a :href="subitem.url" @click="subitem.login_method">{{ subitem.name }} </a>
-        </li>
-        </ul>
-    </li>
-    <qrCodeLoginVue :showModel="login_methods.qrCodeLoginShow"
-    v-on:close-window="closeQrCodeLogin"></qrCodeLoginVue>
-
-    <phoneLoginVue :showModel="login_methods.phoneLoginShow" 
-    v-on:close-window="closePhoneLogin"
-    ></phoneLoginVue>
+       <el-tabs type="cards" stretch>
+        <el-tab-pane label="二维码登录" lazy
+        v-on:getUserInfo="getUserInfo">
+           <qr-code-login/>
+        </el-tab-pane>
+        <el-tab-pane label="手机验证码登录" lazy>
+            <phone-login/>
+        </el-tab-pane>
+       </el-tabs>
     </div>
 </template>
 <script>
-// import {phoneLogin,emailLogin,visitorLogin,logOut} from "./login_methods.js"
-// import qrCodeLoginVue from "./qrCodeLogin.vue"
-// import phoneLoginVue from "./phoneLogin.vue"
+
+import qrCodeLogin from "./qrCodeLogin.vue"
+import phoneLogin from "./phoneLogin.vue"
 
 export default{
     name:"login",
+    components:{
+        qrCodeLogin,phoneLogin,
+    },
     data(){
         return {
-          Apiurl:this.$store.state.CloudMusicApi,
-           menulist:[
-             {
-                name:"登录",url:"#",show:false,
-                subMenus:[
-                    {name:"手机登录", url:"#" ,login_method:this.phoneLogin},
-                    {name:"二维码登录",url:"#",login_method:this.qrCodeLogin},
-                    {name:"游客登录",url:"#",login_method:this.visitorLogin},
-                    {name:"邮箱登录",url:"#",login_method:this.emailLogin},
-                    {name:"退出登录",url:"#",login_method:this.logOut},
-                ]
-             }
-           ],
-           login_methods:{qrCodeLoginShow:false,phoneLoginShow:false,}
+         
+           
         }
     },
     methods:{
-        phoneLogin(){
-            this.login_methods.phoneLoginShow = true;
-            console.log("手机验证码登录被调用");
-        }, 
-        closePhoneLogin(val){
-            console.log("手机验证码登录"+val);
-            
-            this.$store.state.isLogin=val==="success"?true:false;
-            this.login_methods.phoneLoginShow = false; 
-            //请求账号信息
-            this.$axios({
-                method:"get",
-                url:this.Apiurl+"/user/account",
-            })
-            .then(res=>{
-                console.log(res);
-            })
-        },
-        qrCodeLogin(){
-            this.login_methods.qrCodeLoginShow = true,
-            console.log("二维码登录被调用");
-        },
-        closeQrCodeLogin(val){
-            console.log('二维码登录'+val);
-            //把登录状态存入全局变量
-            
-            this.$store.state.isLogin=val==="success"?true:false;
-            this.login_methods.qrCodeLoginShow = false;
-        },
-        emailLogin(){
-
-        },
-        visitorLogin(){},
-        logOut(){},
-       
+        //获取用户数据，将二维码登录组件传上来的数据继续往上传
+       getUserInfo(val){
+        this.$store.state.userInfo = val;
+        this.$emit('getUserInfo',val)
+       }
         
     },
-    components:{
-        qrCodeLoginVue,phoneLoginVue,
-    }
+    
 }
 </script>
 <style scoped>

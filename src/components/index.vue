@@ -42,7 +42,7 @@ export default {
   components:{
    headerBar,footerBar,
     my,friend,
-    musician,download,addSong,
+    musician,download,addSong,store,
   }
 }
 </script>
@@ -58,8 +58,9 @@ export default {
   padding:0;
 }
 .routerView{
-  padding: 0;
+  padding:0;
   margin:0;
+  
 }
 .el-main{
   height:calc(100vh - 140px);

@@ -1,7 +1,7 @@
 <template>
     <div id="header">
-        <el-menu mode='horizontal' :router=true default-active="/discover" :unique-opened=true>
-            <el-menu-item index="/">
+    <el-menu mode='horizontal' :router=true default-active="/discover" :unique-opened=true>
+            <el-menu-item index="/discover">
                发现音乐
                <el-submenu index="/discover">
 
@@ -32,32 +32,75 @@
             <el-menu-item index="/download">
                 下载客户端
             </el-menu-item>
-            <div class="searchBox">
+       
+   </el-menu>
+    
+   
+    <div class="searchBox">
               <el-input
                 placeholder="请输入内容"
                 prefix-icon="el-icon-search"
                 v-model="searchText">
              </el-input>
+    </div>
+    <div class="right">
+            <div class="user">
+                <el-popover  
+                v-model="isPopoverShow"
+                placement="bottom"
+                
+                width="300"
+                trigger="hover"
+                >
+            <login v-if="isPopoverShow" v-on:getUserInfo="(val)=>{userInfo=val;isPopoverShow=false}"></login>
+            <el-avatar  class="avatar" slot="reference">user</el-avatar>
+                </el-popover>
             </div>
-        </el-menu>
-        
-    </div>    
+
+                <!-- 用户名 -->
+            <div class="userName" v-if="userInfo.nickname">
+                    {{ userInfo.nickname }}
+                </div>
+            </div>
+    </div>
+       
 </template>
 <script>
-// import login from "./login/login.vue"
+import { Avatar } from "element-ui";
+import login from "./login/login.vue"
 // let Apiurl  = this.$store.state.CloudMusicApi;
 export default{
     name:"header-bar",
     components:{
-        // login,
-    },
+    login,
+    Avatar
+},
     data(){
         return {
+            //用户信息
+            userInfo:{},
+           //是否显示用户头像
+           isPopoverShow:false,
+           //是否显示热搜数据
+           isSearchPopShow:false,
+           //热搜列表
+           hotSearchList:[],
+            //搜索内容
            searchText:"",
+           //搜索建议列表
+           searchSuggestList:{},
+            //是否显示注册框
+           isRegisteredShow:false,
         }
     },
     created(){
        
+    },
+    watch:{
+        
+    },
+    methods:{
+
     }
 
 }
@@ -74,5 +117,8 @@ export default{
 }
 .el-menu , .searchBox{
     display:inline-block;
+}
+.avatar{
+    user-select: none;
 }
 </style>

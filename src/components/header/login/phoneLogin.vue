@@ -1,27 +1,14 @@
 <template>
-  <div class="model" v-if="showModel">
-    <div class="mask">123</div>
-    <div class="model-dialog">
-      <div class="model-header">
-        <span>手机验证码登录</span>
-        <button href="#" class="icon-close" @click="$emit('close-window','failed')">X</button>
-      </div>
-      <div class="model-body">
-        <input type="text" v-model="phone" placeholder="请输入电话号码">
-        <button @click="getCaptcha">获取验证码</button>
-        <input type="text" v-model="captcha" placeholder="请输入验证码">
-      </div>
-      <div class="model-footer">
-        <button class="btn" @click="checkLogin">确认</button>
-      </div>
-    </div>
+  <div class="model" >
+   此功能尚未开发
+    
   </div>
 </template>
 <script>
 // import qrCode from "../../../views/111.vue"
 
 export default{
-name:"phoneLoginVue",
+name:"phoneLogin",
     props:{
         showModel:Boolean,
     },
@@ -40,60 +27,7 @@ name:"phoneLoginVue",
         }
     },
     methods:{
-        //获取验证码
-        getCaptcha(){
-         
-        const reg = /^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/
-        if(!reg.test(this.phone)){
-            alert("请输入正确的电话号码");
-        }else{
-            this.$axios({
-                methods:"get",
-                url:this.Apiurl+'/captcha/sent',
-                params:{
-                    phone:this.phone,
-                },
-            })
-            console.log("发送请求");
-        }
-
-            
-        },
-        checkLogin(){
-            this.$axios({
-                method:"get",
-                url:this.Apiurl+'/captcha/verify',
-                params:{
-                    phone:this.phone,
-                    captcha:this.captcha,
-                },
-            })
-            .then(res=>{
-                console.log("验证环节");
-                console.log(res);
-                if(res.data.code==200){
-                this.$store.state.user.account = res.data.account;
-                //把登录数据存入localStorage库
-                localStorage.setItem("userData",JSON.stringify(res.data.account));
-                this.result = 'success';   
-                }else{
-                    this.result = 'failed'
-                }
-             })
-             .then(()=>{
-                console.log("获取登录状态")
-                this.$axios({
-                    method:"get",
-                    url:this.Apiurl + "/login/status"
-                })
-                .then((res)=>{
-                    console.log(res);
-                })
-             })
-            .then(()=>{
-            this.$emit('close-window',this.result)
-            });
-        }
+       
     },
     
     watch:{
@@ -109,15 +43,6 @@ name:"phoneLoginVue",
 
 <style>
 
-.mask {
-  position: fixed;/*这里用固定定位，后面设置动画时才不受影响*/
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(167, 165, 165, 0.486);
-  opacity: 0.5;
-  z-index: 9;
-}
 .model-dialog {
   position: absolute;
   top: 50%;
