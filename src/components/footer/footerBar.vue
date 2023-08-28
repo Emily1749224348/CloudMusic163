@@ -5,7 +5,7 @@
 </template>
 <script>
 export default{
-    name:"el-footer",
+    name:"footer-bar",
 }
 </script>
 <style scoped>
@@ -14,7 +14,7 @@ export default{
     /* position:absolute; */
     bottom:0;
     z-index:999;
-    height:10vh;
+    height:50px; 
     width:100vw;
     background-color:cadetblue;
 }

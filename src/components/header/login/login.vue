@@ -21,8 +21,8 @@
 </template>
 <script>
 // import {phoneLogin,emailLogin,visitorLogin,logOut} from "./login_methods.js"
-import qrCodeLoginVue from "./qrCodeLogin.vue"
-import phoneLoginVue from "./phoneLogin.vue"
+// import qrCodeLoginVue from "./qrCodeLogin.vue"
+// import phoneLoginVue from "./phoneLogin.vue"
 
 export default{
     name:"login",

@@ -1,25 +1,39 @@
 <template>
     <div id="body">
-        <nav>
-            <ul class="second-navigator">
+        <el-container>
+           
+            <!-- <el-header>
+                <el-menu mode="horizontal" :router=true>
+                    <el-menu-item index="/discover">推荐</el-menu-item>
+                    <el-menu-item index="/discover/toplist">排行榜</el-menu-item>
+                    <el-menu-item index="/discover/playlist">歌单</el-menu-item>
+                    <el-menu-item index="/discover/djradio">主播电台</el-menu-item>
+                    <el-menu-item index="/discover/artist">歌手</el-menu-item>
+                    <el-menu-item index="/discover/album">新碟上架</el-menu-item> -->
+                <!-- <ul class="second-navigator">
                 <li class="sec_nav_li"><router-link to="/discover" exact>推荐</router-link> </li>
                 <li class="sec_nav_li"><router-link to="/discover/toplist" exact> 排行榜</router-link></li>
                 <li class="sec_nav_li"><router-link to="/discover/playlist" exact>歌单</router-link> </li>
                 <li class="sec_nav_li"><router-link to="/discover/djradio" exact>主播电台</router-link> </li>
                 <li class="sec_nav_li"><router-link to="/discover/artist" exact>歌手</router-link> </li>
                 <li class="sec_nav_li"><router-link to="/discover/album" exact>新碟上架</router-link> </li>
-            </ul>
-        </nav>
-        <div>
-            <router-view></router-view>
-        </div>
+                </ul> -->
+            <!-- </el-menu>  
+            </el-header> -->
+           
+            <el-main>
+               <router-view></router-view> 
+            </el-main>
+        </el-container>
+        
+        
     </div>
 </template>
 <script>
 // import recommend from "../discover/recommend/recommend.vue"
 
 export default{
-    name:"el-body",
+    name:"",
     component:{
         
     }

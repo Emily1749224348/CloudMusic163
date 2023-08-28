@@ -1,26 +1,31 @@
 <template>
   <div class="index">
-    <el-header class=".header">
+<el-container>
+  <el-header height="80px">
+      <header-bar></header-bar>
+  </el-header>
 
-    </el-header>
+  <el-main>
+     <router-view class="routerView">
 
-   <!-- <el-body>
-     
-    </el-body>  -->
-    <router-view class="router">
+      </router-view> 
+  </el-main> 
+  <el-footer height="50px">
+      <footer-bar></footer-bar>
+  </el-footer>
 
-    </router-view>
+</el-container>
 
-    <el-footer class="footer">
-
-    </el-footer>
   </div>
 </template>
 
 <script>
-import ElHeader from "./header/header.vue"
+import headerBar from "./header/headerBar.vue"
+
 import ElBody from "./body/discover/body.vue"
-import ElFooter from "./footer/footer.vue"
+
+import footerBar from "./footer/footerBar.vue"
+
 import my from "./body/my/my.vue"
 import friend from "./body/friend/friend.vue"
 import musician from "./body/musician/musician.vue"
@@ -35,9 +40,8 @@ export default {
     }
   },
   components:{
-    ElHeader,
-    ElBody,
-    ElFooter,my,friend,
+   headerBar,footerBar,
+    my,friend,
     musician,download,addSong,
   }
 }
@@ -46,16 +50,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 *{
+  padding:0;
+  margin:0;
+}
+.el-container{
   margin:0;
   padding:0;
-  list-style-type: none;
 }
-#index{
-  display:grid;
-  grid-template-columns: repeat(80px,auto-fill,40px) !important;
+.routerView{
+  padding: 0;
+  margin:0;
+}
+.el-main{
+  height:calc(100vh - 140px);
+  margin:0;
 }
 
-.router{
-  height:75vh;
-}
 </style>
