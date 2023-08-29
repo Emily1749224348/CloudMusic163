@@ -70,3 +70,19 @@ export function returnSecond(time) {
 export function getTimeStamp() {
   return Date.now();
 }
+
+//获取登录状态
+export async function checkLogin(){
+  let re = await this.$request("/login/status");
+  //检查登录状态
+  console.log(re);
+  return re.data.data.profile;//返回用户账号信息，如果没有登录则这个值为undefined
+}
+
+//更新用户信息
+export async function updateUserInfo(val){
+  this.$store.state.userInfo = val;
+  
+  localStorage.setItem("userInfo",JSON.stringify(val));
+  this.$store.state.isLogin = val?true:false; 
+}

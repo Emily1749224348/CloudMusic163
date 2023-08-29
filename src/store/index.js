@@ -4,7 +4,9 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-    userInfo:{},
+    userInfo:{
+       
+    },
     // 音乐的url
     musicId: '',
     // 音乐的播放状态

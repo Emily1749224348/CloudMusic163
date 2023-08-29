@@ -40,6 +40,7 @@ export default{
         //拿二维码key
         async getQrCodeKey(){
             let res = await request("/login/qr/key");
+            
             this.key = res.data.data.unikey;
         },
 
@@ -70,8 +71,8 @@ export default{
 
         //获取账户信息
         async getAccountInfo(){
-            let res = request("/user/account");
-            if(res.data.code == 200){
+            // let res = request("/user/account");
+           /* if(res.data.code == 200){
                 window.localStorage.setItem("userId",res.data.profile.userId);
                 //向外界传递事件和用户账号信息
                 this.$emit('getUserInfo',res.data.profile); 
@@ -80,7 +81,13 @@ export default{
                 this.$message.success("登录成功！");
                 //把账户信息传进  store里
                 this.$store.commit("updataLoginState",true);
+            }*/
+            let res =await this.$checkLogin();
+            // res.catch("获取二维码失败");
+            if(res){
+                this.$updateUserInfo(res);
             }
+            console.log(res);
         },
 
         //清除定时器

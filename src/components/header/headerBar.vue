@@ -45,22 +45,30 @@
     </div>
     <div class="right">
             <div class="user">
+                <!-- 弹出框 -->
                 <el-popover  
+                v-if="!this.$store.state.isLogin"
                 v-model="isPopoverShow"
                 placement="bottom"
                 
-                width="300"
-                trigger="hover"
-                >
+                width="250"
+                trigger="hover">
+                
+
             <login v-if="isPopoverShow" v-on:getUserInfo="(val)=>{userInfo=val;isPopoverShow=false}"></login>
-            <el-avatar  class="avatar" slot="reference">user</el-avatar>
+            <!-- 下拉菜单 -->
+            
+            <el-avatar  class="avatar" slot="reference" src="../../../static/user.png"></el-avatar>
                 </el-popover>
+                <!-- <img :src="userInfo.avatarUrl" slot="reference"> -->
+           <user-pane v-else >
+           </user-pane> 
             </div>
 
                 <!-- 用户名 -->
-            <div class="userName" v-if="userInfo.nickname">
+            <!-- <div class="userName" v-if="userInfo.nickname">
                     {{ userInfo.nickname }}
-                </div>
+                </div> -->
             </div>
     </div>
        
@@ -68,17 +76,19 @@
 <script>
 import { Avatar } from "element-ui";
 import login from "./login/login.vue"
+import userPane from "./userPane/userPane.vue"
 // let Apiurl  = this.$store.state.CloudMusicApi;
 export default{
     name:"header-bar",
     components:{
     login,
-    Avatar
+    Avatar,userPane,
 },
     data(){
         return {
+            isLogin:false,
             //用户信息
-            userInfo:{},
+            
            //是否显示用户头像
            isPopoverShow:false,
            //是否显示热搜数据
@@ -94,13 +104,34 @@ export default{
         }
     },
     created(){
-       
+       this.isLogin=this.$store.state.isLogin;
     },
     watch:{
         
     },
     methods:{
 
+    }
+    ,
+    computed:{
+        userInfo(){
+            if(this.$store.state.isLogin){
+                return this.$store.state.userInfo ;
+            }else {
+                return {};
+            }
+        },
+        // :{
+        //     setter(){
+        //        return this.$store.state.isLogin?true:false; 
+        //     },
+        //     getter(){
+        //         return this.$store.state.isLogin;
+        //     }
+        // },
+        avatarImg(){
+            return this.$store.state.isLogin?this.userInfo.avatarUrl:"/static/user.png";
+        },
     }
 
 }

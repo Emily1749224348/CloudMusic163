@@ -3,7 +3,9 @@
         <el-container>
             <el-main>
                <router-view class="routerView"></router-view> 
+               <el-button @click="getUserInfo">获取登录状态</el-button>
             </el-main>
+        
         </el-container>
     </div>
 </template>
@@ -11,9 +13,15 @@
 // import recommend from "../discover/recommend/recommend.vue"
 
 export default{
-    name:"",
+    name:"el-body",
     component:{
         
+    },
+    methods:{
+        getUserInfo(){
+            let res  = this.$request("/login/status");
+            console.log(res);
+        }
     }
 }
 </script>

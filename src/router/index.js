@@ -86,7 +86,28 @@ export default new Router({
       path:"/download",
       name:"download",
       component:download,
+    },
+    //用户页面
+    {
+      path:"/user",
+      name:"user",
+      component:()=>{return import("../components/body/user/user.vue")},
+      children:[
+        //我的主页
+        {
+          path:"home",
+          name:"home",
+          component:()=>{return import("../components/body/user/home/home.vue")}
+        },
+        //我的等级
+        {
+          path:"level",
+          name:"level",
+          component:()=>{return import("../components/body/user/level/level.vue")}
+        }
+      ]
     }
+
   ],
   mode:"history"
 })

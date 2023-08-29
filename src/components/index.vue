@@ -6,9 +6,9 @@
   </el-header>
 
   <el-main>
-     <router-view class="routerView">
-
-      </router-view> 
+    <router-view>
+     
+    </router-view>
   </el-main> 
   <el-footer height="50px">
       <footer-bar></footer-bar>
@@ -22,7 +22,7 @@
 <script>
 import headerBar from "./header/headerBar.vue"
 
-import ElBody from "./body/discover/body.vue"
+// import elBody from "./body/discover/body.vue"
 
 import footerBar from "./footer/footerBar.vue"
 
@@ -43,7 +43,18 @@ export default {
    headerBar,footerBar,
     my,friend,
     musician,download,addSong,store,
-  }
+  },
+  async created() {
+    let profile = await this.$checkLogin();
+    if(profile){
+      console.log("已登录");
+      this.$updateUserInfo(profile);    
+    }else{
+      console.log("未登录");
+    }
+  },
+  //给页面添加监听事件，如果存在，那再执行；
+
 }
 </script>
 
