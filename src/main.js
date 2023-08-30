@@ -15,6 +15,7 @@ Vue.prototype.$axios = axios;
 Vue.prototype.$request = request;
 Vue.prototype.$checkLogin = checkLogin;
 Vue.prototype.$updateUserInfo = updateUserInfo;
+
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

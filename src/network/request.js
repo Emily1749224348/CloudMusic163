@@ -6,7 +6,7 @@ import { Message } from 'element-ui';
 export function request(url, params) {
   // 请求超过30秒则判定为超时
   const AxiosRequest = axios.create({
-    baseURL: vuex.state.CloudMusicApi + url,
+    baseURL: vuex.state.CloudMusicApi,
     timeout: 30000,
     withCredentials: true,
   });

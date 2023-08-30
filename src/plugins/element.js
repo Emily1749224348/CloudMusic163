@@ -30,8 +30,10 @@ import {
     Link,
     Tooltip,
     Loading,
+    ElDivider
 } from 'element-ui'
 
+Vue.use(ElDivider)
 Vue.use(Container)
 Vue.use(Header)
 Vue.use(Aside)

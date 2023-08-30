@@ -76,7 +76,7 @@ export async function checkLogin(){
   let re = await this.$request("/login/status");
   //检查登录状态
   console.log(re);
-  return re.data.data.profile;//返回用户账号信息，如果没有登录则这个值为undefined
+  return re.data.data.profile;//返回用户账号信息，如果没有登录则这个值中profile属性为undefined
 }
 
 //更新用户信息
@@ -85,4 +85,24 @@ export async function updateUserInfo(val){
   
   localStorage.setItem("userInfo",JSON.stringify(val));
   this.$store.state.isLogin = val?true:false; 
+}
+
+export function deepClone(o){
+  //判断o是对象还是数组
+  if(Array.isArray(o)){//要优先判断是不是数组！！！因为数组用typeof判断结果还是object
+    var result = [];
+    for (var i = 0; i<o.length; i++){
+      result.push(deepClone(o[i]));//递归，层层拆解对象
+    }
+  }else if(typeof o == 'object'){
+    //对象
+    var result = {};
+    for (var k in o){
+      result[k] = deepClone(o[k]);
+    }
+  }else{
+    //基本类型值
+    var result = o;
+  }
+  return result;
 }

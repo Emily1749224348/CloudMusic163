@@ -1,6 +1,7 @@
 <template>
   <div class="index">
-<el-container>
+    <keep-alive>
+      <el-container>
   <el-header height="80px">
       <header-bar></header-bar>
   </el-header>
@@ -15,6 +16,8 @@
   </el-footer>
 
 </el-container>
+    </keep-alive>
+
 
   </div>
 </template>
@@ -33,6 +36,8 @@ import store from "./body/store/store.vue"
 import addSong from "./body/add_song/add_song.vue"
 import download from "./body/download/download.vue"
 
+import {getLoginStatus} from "../network/server"
+
 export default {
   name: 'index',
   data () {
@@ -45,10 +50,14 @@ export default {
     musician,download,addSong,store,
   },
   async created() {
-    let profile = await this.$checkLogin();
-    if(profile){
+    let res = await this.$checkLogin();
+    console.log(res);
+    if(res){
+      
       console.log("已登录");
-      this.$updateUserInfo(profile);    
+      this.$store.commit("updateUserInfo",res);   
+      this.$store.commit("updateLoginState",true);
+     
     }else{
       console.log("未登录");
     }

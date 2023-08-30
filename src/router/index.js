@@ -91,7 +91,7 @@ export default new Router({
     {
       path:"/user",
       name:"user",
-      component:()=>{return import("../components/body/user/user.vue")},
+      component:()=> import("../components/body/user/user.vue"),
       children:[
         //我的主页
         {

@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const state = {
     userInfo:{
-       
+       // profile 和 account 如果profile为空，则是未登录
     },
     // 音乐的url
     musicId: '',
@@ -28,7 +28,7 @@ const state = {
     // 在歌手详情保存的上一首歌曲信息
     currentRowInfo: {},
     // 用户喜欢的音乐列表
-    likeMuiscList: [],
+    likeMusicList: [],
     // 已收藏的歌单
     // 已收藏的专辑
     subAlbumList: null,
@@ -40,6 +40,10 @@ const state = {
     collectMusicList: [],
     // 用户创建的歌单
     createdMusicList: [],
+    //用户创建的电台
+    createdDjRadio:[],
+    //用户收藏的电台
+    collectDjRadio:[],
     // 要下载的音乐信息
     downloadMusicInfo: {
         name: '',
@@ -47,7 +51,8 @@ const state = {
     },
     // 已喜欢的视频
     likeVideoList: null,
-    CloudMusicApi:"https://netease-cloud-music-api-xi-tawny-81.vercel.app",
+    CloudMusicApi:"https://api.hanling.space",
+    // CloudMusicApi:"https://netease-cloud-music-api-xi-tawny-81.vercel.app",
 };
 
 
@@ -55,6 +60,11 @@ const state = {
 const store = new Vuex.Store({
     state,
     mutations: {
+        
+        //更新用户信息
+        updateUserInfo(state,userInfo){
+            state.userInfo = userInfo;
+        },
         // 更新音乐url
         updateMusicId(state, musicId) {
             state.musicId = musicId;
@@ -81,7 +91,7 @@ const store = new Vuex.Store({
         },
 
         //更新登录状态
-        updataLoginState(state, flag = false) {
+        updateLoginState(state, flag = false) {
             state.isLogin = flag;
         },
 
@@ -107,9 +117,9 @@ const store = new Vuex.Store({
             state.currentRowInfo = currentRowInfo;
         },
         // 更新用户喜欢的音乐列表
-        // 才发现这里拼错了 懒得改了
-        updataLikeMuiscList(state, likeMuiscList) {
-            state.likeMuiscList = likeMuiscList;
+        
+        updateLikeMusicList(state, likeMusicList) {
+            state.likeMusicList = likeMusicList;
         },
         // 更新已收藏的专辑列表
         updateSubAlbumList(state, subAlbumList) {
@@ -130,6 +140,12 @@ const store = new Vuex.Store({
         // 更新用户创建的歌单
         updateCreatedMusicList(state, createdMusicList) {
             state.createdMusicList = createdMusicList;
+        },
+        updateCreatedDjRadio(state,createdDjRadio){
+            state.createdDjRadio = createdDjRadio;
+        },
+        updateCollectDjRadio(state,collectDjRadio){
+            state.CollectDjRadio = collectDjRadio;
         },
         // 更新当前下载的音乐信息
         updateDownloadMusicInfo(state, info) {
