@@ -2,12 +2,15 @@
     <div id="pane">
             <el-dropdown>
                 <span><el-avatar :src="userInfo.avatarUrl"></el-avatar>  </span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item><router-link :to="userHome">我的主页</router-link></el-dropdown-item>
-                    <el-dropdown-item>我的消息</el-dropdown-item>
-                    <el-dropdown-item>我的等级</el-dropdown-item>
-                    <el-dropdown-item>VIP会员</el-dropdown-item>
-                    <el-dropdown-item>个人设置</el-dropdown-item>
+                <el-dropdown-menu slot="dropdown" 
+                split-button
+                :split-button="true" 
+                >
+                    <el-dropdown-item @click.native="goToUserHome">我的主页</el-dropdown-item>
+                    <el-dropdown-item @click.native="goToMsg">我的消息</el-dropdown-item>
+                    <el-dropdown-item @click.native="goToLevel">我的等级</el-dropdown-item>
+                    <el-dropdown-item @click.native="goToVIP">VIP会员</el-dropdown-item>
+                    <el-dropdown-item @click.native="goToUpdate">个人设置</el-dropdown-item>
                     <el-dropdown-item>实名认证</el-dropdown-item>
                     <el-dropdown-item>主播入口</el-dropdown-item>
                     <el-dropdown-item>退出登录</el-dropdown-item>
@@ -66,6 +69,38 @@ export default{
             //  /user/subcount
             return this.$request("/user/subcount");
        },
+       handleCommand(val){
+        console.log(val);
+        switch(val){
+
+            case "goToUpdate":
+                this.goToUpdate();
+                return;
+            case "goToUserHome":
+                this.goToUserHome();
+                return;
+            case "goToLevel":
+                this.goToLevel();
+                return 
+            default:
+                this.$message.error("ERROR!!! 此功能尚未开发，敬请期待");
+        }
+       },
+       goToUpdate(){
+        this.$router.push({path:"/user/update"});
+       },
+       goToLevel(){
+        this.$router.push({path:"user/level"})
+       },
+       goToUserHome(){
+         this.$router.push({path:"/user/home",query:{id:this.userId}})
+       },
+       goToMsg(){
+        this.$router.push({path:"/user/msg"});
+       },
+       goToVIP(){
+        this.$router.push({path:"/user/VIP"});
+       }
        
 
     },

@@ -76,3 +76,8 @@ export function getUserRecord(query){
 export function getCreatedDjRadio(query){
     return request("/user/audio",query);
 }
+
+//获取音乐url
+export function getMusicUrl(query){
+    return request("/song/url/v1",query)
+}

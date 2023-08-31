@@ -12,56 +12,53 @@
     <!-- 左边 -->
     <div class="left">
       <div class="avatar" @click="$store.commit('changeMusicDetailCardState')">
-        <img 
-        v-if="musicDetail.al"
-         :src="musicDetail.al.picUrl"
+        <img
+          :src="musicDetail.al.picUrl"
           alt=""
+          v-if="musicDetail.al"
           :draggable="false"
         />
-        <img src="../../assets/test.jpg" alt="" v-else :draggable="false" />
+        <img src="~assets/img/test.jpg" alt="" v-else :draggable="false" />
       </div>
       <div class="musicInfo">
         <div class="musicName" v-if="musicDetail && musicDetail.name">
-          {{ musicDetail.name}}
+          {{ musicDetail.name }}
         </div>
         <div
           class="singer"
-          v-if="musicDetail &&musicDetail.name"
+          v-if="musicDetail && musicDetail.name"
           @click="goToSingerDetail"
         >
           {{ musicDetail.ar[0].name }}
         </div>
       </div>
       <div class="downloadContainer" v-if="musicDetail.name">
-        <i class="iconfont el-icon-download" @click="downloadCurrentMusic"></i>
+        <i class="iconfont icon-download" @click="downloadCurrentMusic"></i>
       </div>
     </div>
     <!-- 中间 -->
     <div class="center">
       <div class="buttons">
-        <!-- 播放顺序 随机？顺序 -->
         <span @click="playType = playType == 'order' ? 'random' : 'order'"
-          ><i class="iconfont el-icon-refresh-right" v-if="playType == 'order'"></i
-          ><i class="iconfont el-icon-refresh" v-else></i
+          ><i class="iconfont icon-xunhuan" v-if="playType == 'order'"></i
+          ><i class="iconfont icon-suiji1" v-else></i
         ></span>
-        <!-- 上一首歌 -->
         <span @click="musicList.length != 0 ? changeMusic('pre') : ''"
-          ><i class="iconfont el-icon-caret-left"></i
+          ><i class="iconfont icon-shangyishou"></i
         ></span>
-        <!-- <span @click="musicList.length != 0 ? changePlayState() : ''"> -->
-        <span @click="changePlayState()">
+        <span @click="musicList.length != 0 ? changePlayState() : ''">
           <i
-            class="iconfont el-icon-video-pause"
-            v-if="this.$store.state.isPlay"
+            class="iconfont icon-icon_play"
+            v-if="!this.$store.state.isPlay"
           ></i>
-          <i class="iconfont el-icon-video-play" v-else></i>
+          <i class="iconfont icon-zantingtingzhi" v-else></i>
         </span>
         <span @click="musicList.length != 0 ? changeMusic('next') : ''"
-          ><i class="iconfont el-icon-caret-right"></i
+          ><i class="iconfont icon-xiayishou"></i
         ></span>
         <span
           ><i
-            class="iconfont el-icon-star"
+            class="iconfont icon-xihuan"
             :class="isUserLikeCurrentMusic ? 'like' : ''"
             @click="musicList.length != 0 ? likeIt() : ''"
           ></i
@@ -76,15 +73,15 @@
           v-model="timeProgress"
           :show-tooltip="false"
           @change="changeProgress"
-         :disabled="!this.musicUrl" 
-        ></el-slider> 
-        <span class="totalTime">{{ duration | handleMusicTime }}</span>
+          :disabled="musicList.length == 0"
+        ></el-slider>
+        <span class="totalTime">{{ duration }}</span>
       </div>
     </div>
     <!-- 右边 -->
     <div class="right">
       <div class="volumeControl">
-        <i class="iconfont el-icon-music" @click="changeMutedState"></i>
+        <i class="iconfont icon-yinliang" @click="changeMutedState"></i>
         <el-slider
           class="volumeSlider"
           v-model="volume"
@@ -96,7 +93,7 @@
         <i class="iconfont icon-bofangliebiao"></i>
       </div>
       <!-- 备案信息 -->
-      <!-- <el-tooltip
+      <el-tooltip
         class="item"
         effect="dark"
         placement="left"
@@ -110,7 +107,7 @@
           class="recondInfo"
           >粤ICP备2021068014号</el-link
         >
-      </el-tooltip> -->
+      </el-tooltip>
     </div>
     <!-- 抽屉 -->
     <el-drawer :visible.sync="drawer" :with-header="false" width="300">
@@ -133,7 +130,7 @@
 </template>
 
 <script>
-import { handleMusicTime, returnSecond } from "../../plugins/utils";
+import { handleMusicTime, returnSecond } from "plugins/utils";
 let lastSecond = 0;
 // 总时长的秒数
 let durationNum = 0;
@@ -143,17 +140,15 @@ let volumeSave = 0;
 let musicType = "";
 
 export default {
-  name: "footer-bar",
+  name: "BottomControl",
   data() {
     return {
       musicDetail: {},
-      musicInfo:{},
       musicUrl: "",
       musicList: [],
       currentMusicIndex: 0,
-      coverUrl:"",
       drawer: false,
-      // 音乐总时长    值为毫秒， 放到DOM上用过滤器handleMusicTime转化为60进制
+      // 音乐总时长
       duration: "00:00",
       // 当前播放时间位置
       currentTime: 0,
@@ -166,7 +161,7 @@ export default {
       // 抽屉是否被打开过（如果没打开过，里面的数据是不会渲染的）
       hasDrawerOpend: false,
       // 用户的喜欢音乐列表
-      likeMusicList: [],
+      likeMuiscList: [],
       // 用户是否喜欢当前音乐
       isUserLikeCurrentMusic: false,
       recondInfo: `<div style='text-align:center;font-size:12px;'>
@@ -178,31 +173,20 @@ export default {
   },
   methods: {
     // 请求
-    // 请求歌曲的url  只是根据
+    // 请求歌曲的url
     async getMusicDetail(id) {
       this.$store.commit("updateMusicLoadState", true);
-      //获取音乐的播放链接、时长
-      let music = await this.$request("/song/url/v1", { id:id , level:'lossless'});
-      //获取音乐的名称、作者、封面图
-      // let detail = await this.$request("/song/detail",{ids:id});
+      let result = await this.$request("/song/url", { id });
       // console.log(musicDetail);
-      // console.log("musicUrl");
-      // console.log(music);
+      // console.log(result);
       // 获取不到url
-      if (music.data.data[0].url == null) {
+      if (result.data.data[0].url == null) {
         this.$message.error("该歌曲暂无版权，将为您播放下一首歌曲");
         this.changeMusic("next");
         return;
       }
-      this.musicUrl = music.data.data[0].url;
-      musicType = music.data.data[0].type.toLowerCase();
-      // this.musicDetail = detail.data.songs[0];
-      console.log('musicDetail');
-      console.log(this.musicDetail);
-      //设置好播放总时长
-      // this.duration = music.data.data[0].time;
-      // durationNum = returnSecond(this.duration);
-      // this.musicList.push(detail.data.data[0]);
+      this.musicUrl = result.data.data[0].url;
+      musicType = result.data.data[0].type.toLowerCase();
       this.$store.commit("updateMusicLoadState", false);
     },
     // 喜欢该音乐
@@ -224,9 +208,9 @@ export default {
         uid: window.localStorage.getItem("userId"),
         timestamp,
       });
-      this.likeMusicList = res.data.ids;
+      this.likeMuiscList = res.data.ids;
       // 将喜欢列表提交到vuex 供歌单中显示喜欢使用 （因为性能问题暂时没做）
-      this.$store.commit("updateLikeMusicList", this.likeMusicList);
+      this.$store.commit("updataLikeMuiscList", this.likeMuiscList);
     },
 
     // 点击播放键的回调
@@ -236,7 +220,6 @@ export default {
     // 播放音乐的函数
     playMusic() {
       this.$refs.audioPlayer.play();
-
     },
     // 暂停音乐的函数
     pauseMusic() {
@@ -272,10 +255,6 @@ export default {
         // 将索引传至vuex
         this.$store.commit("updateCurrentIndex", index);
         this.musicDetail = this.musicList[index];
-        // console.log("musicDetail");
-        // console.log(this.musicDetail);
-        // console.log("musicList")
-        // console.log(this.musicList);
         // 直接从audio标签中的duration属性拿时长会有请求时差问题，所以直接在musicInfo中拿
         this.duration = this.musicList[index].dt;
       }
@@ -289,7 +268,10 @@ export default {
         let currentMusicIndex = this.currentMusicIndex;
         let preIndex;
         if (this.playType == "order") {
-          preIndex =  currentMusicIndex - 1 < 0  ? this.musicList.length - 1  : currentMusicIndex - 1;
+          preIndex =
+            currentMusicIndex - 1 < 0
+              ? this.musicList.length - 1
+              : currentMusicIndex - 1;
         } else if (this.playType == "random") {
           if (this.musicList.length == 1) {
             preIndex = currentMusicIndex;
@@ -307,7 +289,10 @@ export default {
         let currentMusicIndex = this.currentMusicIndex;
         let nextIndex;
         if (this.playType == "order") {
-          nextIndex = currentMusicIndex + 1 == this.musicList.length? 0 : currentMusicIndex + 1;
+          nextIndex =
+            currentMusicIndex + 1 == this.musicList.length
+              ? 0
+              : currentMusicIndex + 1;
         } else if (this.playType == "random") {
           if (this.musicList.length == 1) {
             nextIndex = currentMusicIndex;
@@ -320,8 +305,7 @@ export default {
           }
         }
         // console.log(this.musicList[nextIndex].id);
-        console.log(this.musicList);
-        // this.$store.commit("updateMusicId", this.musicList[nextIndex].id);
+        this.$store.commit("updateMusicId", this.musicList[nextIndex].id);
       }
     },
     // 双击抽屉列表中的row的回调
@@ -332,7 +316,7 @@ export default {
     // 当前播放时间位置
     timeupdate() {
       // console.log(e);
-      // console.log(this.$refs.audioPlayer.currentTime); 秒数
+      // console.log(this.$refs.audioPlayer.currentTime);
       // 节流
       let time = this.$refs.audioPlayer.currentTime;
       // 将当前播放时间保存到vuex  如果保存到vuex这步节流,会导致歌词不精准,误差最大有1s
@@ -344,7 +328,6 @@ export default {
         lastSecond = time;
         this.currentTime = time;
         // 计算进度条的位置
-        // console.log(durationNum);
         this.timeProgress = Math.floor((time / durationNum) * 100);
         // console.log(this.timeProgress);
       }
@@ -420,7 +403,7 @@ export default {
 
     // 判断用户是否喜欢该音乐
     getIsUserLikeCurrentMusic() {
-      this.isUserLikeCurrentMusic = this.likeMusicList.find(
+      this.isUserLikeCurrentMusic = this.likeMuiscList.find(
         (item) => item == this.$store.state.musicId
       );
     },
@@ -493,16 +476,10 @@ export default {
       console.log("vuex中的id发生了变化");
       // 先暂停当前播放的音乐
       this.pauseMusic();
-      //把store里的musicList拿过来
       this.musicList = this.$store.state.musicList;
-      //找到musicList中正在播放的那首歌的index，将音乐信息放入musicDetail，设置好播放时长
       this.getMusicDetailFromMusicList();
-      //根据id找到音乐播放的url
       this.getMusicDetail(id);
-      //把durationNum的值拿到， 
-      durationNum = returnSecond(handleMusicTime(this.duration));
-      // console.log("durationNum");
-      // console.log(durationNum);
+      durationNum = returnSecond(this.duration);
       // 判断用户是否喜欢当前音乐
       this.getIsUserLikeCurrentMusic();
       // console.log(this.$refs.audioPlayer);
@@ -511,7 +488,7 @@ export default {
     "$store.state.currentIndex"(currentIndex, lastIndex) {
       if (this.hasDrawerOpend) {
         this.handleDrawerListDOM(currentIndex, lastIndex);
-      };
+      }
     },
     // 监听播放状态
     "$store.state.isPlay"(isPlay) {
@@ -526,7 +503,7 @@ export default {
         this.getLikeMusicList();
       } else {
         // 清空喜欢列表
-        this.likeMusicList = [];
+        this.likeMuiscList = [];
       }
     },
   },

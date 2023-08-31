@@ -32,11 +32,12 @@
             <h3>听歌排行</h3>
             <el-divider></el-divider>
             <el-row :gutter="10" width="100%"  class="records"
-            v-for="(item,index) in playRecord" :key="index" style="">
-            <el-col :span="10" class="name">{{ item.song.name }}</el-col>
-            <el-col :span="6"  style="{color:gray}" class="name"> -{{ item.song.ar[0].name }}</el-col><!--singer-->
+            v-for="(item,index) in playRecord" :key="index" 
+           >
+            <el-col :span="10" class="name songName" style="width:250px;" @click="playMusic(item)">{{ item.song.name }}</el-col>
+            <el-col :span="6"  style="{color:gray}" class="name" :offset="2"> -{{ item.song.ar[0].name }}</el-col><!--singer-->
             <el-col :span="6" >{{ item.playCount }}</el-col>
-            <el-col :span="2"><i class="el-icon-video-play"></i> </el-col>
+            <el-col :span="2" ><i @click.prevent="playMusic(item)" class="el-icon-video-play"></i></el-col>
             </el-row>
         </div>
         <div class="part">
@@ -60,7 +61,7 @@
             v-for="(item,index) in collectPlaylist" :key="index" >
                 <img :src="item.coverImgUrl" class="image">
                 <div style="padding: 14px;display:flex;flex-flow:nowrap column;">
-                    <div class="names playlist">{{ item.name }}</div>
+                    <div class="names playlist"> {{ item.name }}</div>
                     <div class="bottom clearfix">
                         <el-button type="text" class="button">操作按钮</el-button>
                     </div>
@@ -77,7 +78,8 @@
 import {getUserDetail ,getUserSubcount,
      getUserPlaylist,getUserFollows,
      getUserEvent,getUserFolloweds,
-     getUserRecord, getUserDj,getCreatedDjRadio} from "../../../../network/server"
+     getUserRecord, getUserDj,getCreatedDjRadio,
+     getMusicUrl} from "../../../../network/server"
 //深克隆
 import {deepClone} from "../../../../plugins/utils" 
 
@@ -107,7 +109,7 @@ export default{
             let record = await this.getUserRecord();
             await console.log("record");
             await console.log(record);
-            this.playRecord = record.data.allData.slice(0, 9);
+            this.playRecord = record.data.allData.slice(0, 10);
             await this.updatePlaylist();
         },
         async getUerDetail() {
@@ -148,6 +150,17 @@ export default{
             });
             await console.log("this.collectPlaylist");
             await console.log(this.collectPlaylist);
+        },
+        //获取音乐url
+        async getMusicUrl(val){
+            return getMusicUrl(val);
+        },
+        //playMusic
+        async playMusic(item){
+            this.$store.commit('updateMusicId',item.song.id)
+            this.$store.state.musicList = [];
+            this.$store.state.musicList.push(item.song);
+            // console.log("this.$store.state.musicList");
         }
     },
     async created() {
@@ -160,6 +173,7 @@ export default{
         await console.log("userSubcount");
         await console.log(this.userSubcount);
     },
+
     watch: {},
     computed: {},
     components: {  }
@@ -191,11 +205,17 @@ div.part{
     text-overflow: ellipsis;
     height:20px;
 }
+
 .cards{
     width:150px;
     height:230px;
     display:inline-block;
     margin-left:10px;
+}
+.records .el-col{
+    height :20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .time {
     font-size: 13px;

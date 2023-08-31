@@ -104,10 +104,33 @@ export default new Router({
           path:"level",
           name:"level",
           component:()=>{return import("../components/body/user/level/level.vue")}
+        },
+        //设置
+        {
+          path:"update",
+          name:"update",
+          component:()=>{return import("../components/body/user/update/update.vue")}
+        },
+        //vip
+        {
+          path:"VIP",
+          name:"VIP",
+          component:()=>{return import("../components/body/user/VIP/VIP.vue")}
+        },
+        //我的消息
+        {
+          path:"msg",
+          name:"userMessage",
+          component:()=>{return import("../components/body/user/message/message.vue")}
         }
       ]
+    },
+    //-------------搜索页面---------------
+    {
+      path:"/search",
+      name:"search",
+      component:()=>{return import("../components/body/search/search.vue")}
     }
-
   ],
   mode:"history"
 })

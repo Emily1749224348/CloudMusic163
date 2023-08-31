@@ -37,11 +37,12 @@
     
    
     <div class="searchBox">
-              <el-input
+              <input
                 placeholder="请输入内容"
                 prefix-icon="el-icon-search"
-                v-model="searchText">
-             </el-input>
+                v-model="searchText"
+                @keyup="search($event)">
+             
     </div>
     <div class="right">
             <div class="user">
@@ -110,7 +111,12 @@ export default{
         
     },
     methods:{
-
+        search(e){
+            if(e.keyCode==13){
+                console.log(this.searchText)
+                this.$router.push({path:"/search?keywords=" + this.searchText})
+            }
+        }
     }
     ,
     computed:{

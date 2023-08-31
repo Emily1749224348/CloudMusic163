@@ -2,10 +2,9 @@
     <div id="body">
         <el-container>
             <el-main>
-               <router-view class="routerView"></router-view> 
+               <router-view :key="$route.fullPath" class="routerView"></router-view> 
                <el-button @click="getUserInfo">获取登录状态</el-button>
             </el-main>
-        
         </el-container>
     </div>
 </template>
