@@ -4,14 +4,15 @@
        <el-container direction="vertical">
     <div class="header">
             <img :src="userInfo.avatarUrl" width="100px" height="100px"> 
-        <el-descriptions :title="userInfo.nickname" :column="2" size="medium" width="400px" font-size="24px">
+        <div class="info">
+            <h2>{{ userInfo.nickname }}</h2>
             <!-- <el-descriptions-item label="用户名">{{ userInfo.nickname }} </el-descriptions-item> -->
-            <el-descriptions-item label="个人介绍">{{ userInfo.signature }}</el-descriptions-item>
-            <el-descriptions-item label="等级">Lv{{ userDetail.level }} </el-descriptions-item>
-            <el-descriptions-item label="动态">{{ userInfo.eventCount }}</el-descriptions-item>
-            <el-descriptions-item label="关注">{{ userInfo.follows }}</el-descriptions-item>
-            <el-descriptions-item label="粉丝">{{ userInfo.followeds }}</el-descriptions-item>
-        </el-descriptions>
+            <h4 >个人介绍：{{ userInfo.signature }}</h4><br>
+            <h4 class="events" @click="goToUserLevel">等级：Lv{{ userDetail.level }} </h4><br>
+            <h4 class="events" @click="goToUserEvents">动态：{{ userInfo.eventCount }}</h4>
+            <h4 class="events" @click="goToUserFollows">关注：{{ userInfo.follows }}</h4>
+            <h4 class="events" @click="goToUserFans">粉丝：{{ userInfo.followeds }}</h4>
+        </div>
            
             
     </div>
@@ -161,6 +162,21 @@ export default{
             this.$store.state.musicList = [];
             this.$store.state.musicList.push(item.song);
             // console.log("this.$store.state.musicList");
+        },
+        //查看关注列表
+        goToUserFollows(){
+            this.$router.push({path:"/user/follows",query:{id:this.userId}});
+        },
+        //查看动态
+        goToUserEvents(){
+            this.$router.push({path:"/user/events",query:{id:this.userId}});
+        },
+        //查看粉丝
+        goToUserFans(){
+            this.$router.push({path:"/user/fans",query:{id:this.userId}});
+        },
+        goToUserLevel(){
+            this.$router.push({path:"/user/level"});
         }
     },
     async created() {
@@ -184,10 +200,13 @@ export default{
     display:inline-flex;
 
 }
-
-.el-descriptions{
-    margin-left:10px;
-    width:450px;
+.info{
+    margin-left:30px;
+}
+.info h4{
+    display:inline-block;
+    font-weight: 400;
+    margin: 2px 4px;
 }
 
 div.part{
@@ -235,5 +254,9 @@ div.part{
 .image {
     width: 100%;
     display: block;
+  }
+  .events:hover{
+    color:crimson;
+    cursor: pointer;
   }
 </style>

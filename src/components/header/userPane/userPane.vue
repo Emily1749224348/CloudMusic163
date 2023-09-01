@@ -13,7 +13,7 @@
                     <el-dropdown-item @click.native="goToUpdate">个人设置</el-dropdown-item>
                     <el-dropdown-item>实名认证</el-dropdown-item>
                     <el-dropdown-item>主播入口</el-dropdown-item>
-                    <el-dropdown-item>退出登录</el-dropdown-item>
+                    <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
             
@@ -100,6 +100,17 @@ export default{
        },
        goToVIP(){
         this.$router.push({path:"/user/VIP"});
+       },
+       async logout(){
+        this.$request("logout");
+        let result = await this.$checkLogin();
+        if(!result){
+            this.$message("退出成功");
+            this.$store.commit("updateUserInfo",result);
+            this.$store.commit("updateLoginState",false);
+        }else{
+            this.$message.error("退出失败");
+        }
        }
        
 

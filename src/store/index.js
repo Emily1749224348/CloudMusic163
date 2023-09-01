@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const state = {
     userInfo:{
-       // profile 和 account 如果profile为空，则是未登录
+       // 只包含profile
     },
     // 音乐的url
     musicId: '',

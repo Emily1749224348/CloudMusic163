@@ -122,7 +122,25 @@ export default new Router({
           path:"msg",
           name:"userMessage",
           component:()=>{return import("../components/body/user/message/message.vue")}
-        }
+        },
+        //我的粉丝
+        {
+          path:"fans",
+          name:"fans",
+          component:()=>{return import("../components/body/user/fans/fans.vue")}
+        },
+        //我的关注
+        {
+          path:"follows",
+          name:"follows",
+          component:()=>{return import("../components/body/user/follows/follows.vue")}
+        },
+        //我的动态
+        {
+          path:"events",
+          name:"events",
+          component:()=>{return import("../components/body/user/events/events.vue")}
+        },
       ]
     },
     //-------------搜索页面---------------

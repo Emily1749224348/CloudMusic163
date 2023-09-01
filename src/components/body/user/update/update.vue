@@ -1,10 +1,11 @@
 <template>
 <div>
-   <h1>个人设置</h1>
+    <keep-alive>
+      <h1>个人设置</h1>
     <el-tabs v-model="activeName" type="card">
         <el-tab-pane label="基本设置" name="basic">
         <div v-if="activeName==='basic'">
-            <el-form v-model="basicInfo">
+        <el-form v-model="basicInfo">
             <el-form-item label="昵称">
                 <el-input v-model="basicInfo.nickname"></el-input>
             </el-form-item>
@@ -33,7 +34,9 @@
         </el-tab-pane>
         <el-tab-pane label="绑定设置" name="binding">2</el-tab-pane>
         <el-tab-pane label="隐私设置" name="private">3</el-tab-pane>
-    </el-tabs>
+    </el-tabs>   
+    </keep-alive>
+  
 </div>
 </template>
 <script>
@@ -63,6 +66,7 @@ export default{
             privateInfo:{
 
             },
+            //这里的userDetail不等于userInfo , profile只是其中的一个属性
             userDetail:{ },
             AxiosRequest : axios.create({
                 baseURL: this.$store.state.CloudMusicApi,
@@ -73,7 +77,7 @@ export default{
         }
     } ,
     methods:{
-        onSubmit(){
+        async onSubmit(){
             
             console.log(this.basicInfo);
             let nickname = this.basicInfo.nickname;
@@ -87,42 +91,33 @@ export default{
                 signature:signature,
                 birthday:birthday,
             };
-            AxiosRequest.post("/user/update",{
-                city:500101,
-                nickname:nickname,
-                gender:gender,
-                signature:signature,
-                birthday:birthday,
-            }).then(res=>{
-                if(res.data.code==200){
+            //重复昵称检测
+            let isDuplicated = await this.$request("nickname/check",{nickname:nickname});
+            //重复
+            if(isDuplicated.data.duplicated){
+                this.$message.error("昵称重复，请另写昵称");
+            }
+            //
+            else{
+                let result = await this.AxiosRequest.post("/user/update",params);
+                if(result.data.code==200){
                     this.$message("提交成功");
+                    this.updateUserInfo();
                 }else{
                     this.$message.error("提交失败");
                 }
-                
-            });
-            // this.$axios.post({
-            //         url: this.$store.state.CloudMusicApi + "/user/update",
-            //         timeout: 30000,
-            //         withCredentials: true,
-            //         params:{
-            //             city:500101,
-            //             nickname:nickname,
-            //             gender:gender,
-            //             signature:signature,
-            //             birthday:birthday,
-            //         }} )
-            // let result = this.$request("/user/update",{
-            //             city:500101,
-            //             nickname:nickname,
-            //             gender:gender,
-            //             signature:signature,
-            //             birthday:birthday,
-            // });
-            // console.log(result);
+            }
+            },//submit函数结束
+            //更新store里的用户信息
+            async updateUserInfo(){
+                let profile = this.$checkLogin();
+                this.$store.commit("updateUserInfo",profile);
+            }
+              
+           
         },
         
-    } ,
+    
     async created(){
        let result = await getUserDetail({uid:this.$store.state.userInfo.userId});
        this.userDetail = result.data;

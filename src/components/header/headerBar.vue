@@ -115,6 +115,7 @@ export default{
             if(e.keyCode==13){
                 console.log(this.searchText)
                 this.$router.push({path:"/search?keywords=" + this.searchText})
+                this.searchText = "";
             }
         }
     }
@@ -157,5 +158,20 @@ export default{
 }
 .avatar{
     user-select: none;
+}
+.searchBox{
+    align-items: center;
+    margin:auto 10px;
+}
+.searchBox>input{
+    width:200px;
+    height:30px;
+    outline: none;
+    border-radius:4px;
+    border:1px gray solid;
+    background-color:#fff;
+}
+.searchBox>input:focus{
+    border:1px crimson solid;
 }
 </style>
