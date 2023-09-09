@@ -23,5 +23,3 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 仿网易云web
 
 功能实现：基本路由跳转、二维码登录、歌曲搜索、歌曲播放（有进度条并且能拖动）、查看个人信息、更新个人信息、退出登录
-
-在线浏览： <https://emily1749224348.github.io/CloudMusic163/dist>
