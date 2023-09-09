@@ -1,2 +1,0 @@
-webpackJsonp([14],{"8G33":function(e,t,r){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n={render:function(){var e=this.$createElement,t=this._self._c||e;return t("div",[t("router-view",{key:this.$route.fullPath})],1)},staticRenderFns:[]},u=r("VU/8")({name:"user"},n,!1,null,null,null);t.default=u.exports}});
-//# sourceMappingURL=14.2f900ec346fba30ea30e.js.map
