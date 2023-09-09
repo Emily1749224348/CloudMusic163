@@ -1,0 +1,2 @@
+webpackJsonp([6],{akLr:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("div",[this._v("\n    message of user private\n")])},staticRenderFns:[]};var s=t("VU/8")({name:"message"},r,!1,function(e){t("eAof")},null,null);n.default=s.exports},eAof:function(e,n){}});
+//# sourceMappingURL=6.2a37a522865389485b38.js.map

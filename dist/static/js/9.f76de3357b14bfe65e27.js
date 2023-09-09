@@ -1,0 +1,2 @@
+webpackJsonp([9],{OO6f:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r={render:function(){this.$createElement;this._self._c;return this._m(0)},staticRenderFns:[function(){var t=this.$createElement,e=this._self._c||t;return e("div",{attrs:{id:"artist"}},[e("p",[this._v("音乐人")])])}]};var i=n("VU/8")({name:"artist"},r,!1,function(t){n("QLuJ")},"data-v-38267a88",null);e.default=i.exports},QLuJ:function(t,e){}});
+//# sourceMappingURL=9.f76de3357b14bfe65e27.js.map

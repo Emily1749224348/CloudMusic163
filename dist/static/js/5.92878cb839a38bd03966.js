@@ -1,0 +1,2 @@
+webpackJsonp([5],{"/Oby":function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var i={render:function(){this.$createElement;this._self._c;return this._m(0)},staticRenderFns:[function(){var t=this.$createElement,e=this._self._c||t;return e("div",{attrs:{id:"toplist"}},[e("p",[this._v("歌曲排行榜")])])}]};var s=n("VU/8")({name:"toplist"},i,!1,function(t){n("Wzvc")},"data-v-5b6dd69b",null);e.default=s.exports},Wzvc:function(t,e){}});
+//# sourceMappingURL=5.92878cb839a38bd03966.js.map
