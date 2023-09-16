@@ -1,6 +1,10 @@
 <template>
     <div id="friend">
-        关注
+        <el-container v-if="this.$store.state.isLogin">
+            我的关注列表
+        </el-container>
+        <el-empty v-else description="请先登录"></el-empty>
+    ...    
     </div>
 </template>
 <script>

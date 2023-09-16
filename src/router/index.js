@@ -150,5 +150,5 @@ export default new Router({
       component:()=>{return import("../components/body/search/search.vue")}
     }
   ],
-  mode:"history"
+  mode:"history",
 })

@@ -11,10 +11,7 @@
                 <span>动态：{{ item.eventCount }}</span>
                 <p>{{ item.signature }}</p>
             </div>
-           
         </div>
-      
-        
     </div>
 </template>
 <script>

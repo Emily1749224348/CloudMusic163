@@ -10,6 +10,7 @@ import "element-ui/lib/theme-chalk/index.css"
 import {request} from "./network/request"
 import {checkLogin, updateUserInfo} from "./plugins/utils"
 
+
 Vue.use(ElementUI);
 Vue.prototype.$axios = axios;
 Vue.prototype.$request = request;

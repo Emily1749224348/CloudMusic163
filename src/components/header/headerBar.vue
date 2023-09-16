@@ -1,9 +1,9 @@
 <template>
     <div id="header">
-    <el-menu mode='horizontal' :router=true default-active="/discover" :unique-opened=true>
+    <el-menu mode='horizontal' :router=true default-active="/discover" >
             <el-menu-item index="/discover">
                发现音乐
-               <el-submenu index="/discover">
+               <!-- <el-submenu index="/discover">
 
                     <el-menu-item index="/discover">推荐</el-menu-item>
                     <el-menu-item index="/discover/toplist">排行榜</el-menu-item>
@@ -12,7 +12,7 @@
                     <el-menu-item index="/discover/artist">歌手</el-menu-item>
                     <el-menu-item index="/discover/album">新碟上架</el-menu-item>
                            
-               </el-submenu>
+               </el-submenu> -->
             </el-menu-item>
             <el-menu-item index="/my">
                 我的音乐
@@ -76,7 +76,7 @@
 </template>
 <script>
 import { Avatar } from "element-ui";
-import login from "./login/login.vue"
+import login from "./login/login.vue" ;
 import userPane from "./userPane/userPane.vue"
 // let Apiurl  = this.$store.state.CloudMusicApi;
 export default{
@@ -149,9 +149,32 @@ export default{
     text-decoration:none;
 }
 #header{
+    width:calc(100vw);
+    min-width:1000px;
     display:flex;
     flex-flow:row nowrap;
     align-items: center;
+    background: #242424;
+}
+/*导航栏菜单 */
+.el-menu{
+    background:#242424;
+    color:#fff;
+    border:none;
+}
+.el-menu.is-active{
+    border:none;
+    
+    
+}
+.el-menu--horizontal>.el-menu-item.is-active {
+    background:black;
+    color:white; 
+    border:none;
+}
+.el-menu--horizontal>.el-menu-item:hover{
+    background:black;
+    color:white;
 }
 .el-menu , .searchBox{
     display:inline-block;
@@ -159,6 +182,7 @@ export default{
 .avatar{
     user-select: none;
 }
+/**搜索框 */
 .searchBox{
     align-items: center;
     margin:auto 10px;

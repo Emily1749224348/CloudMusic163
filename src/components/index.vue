@@ -2,7 +2,7 @@
   <div class="index">
     <keep-alive>
       <el-container>
-  <el-header height="80px">
+  <el-header height="60px">
       <header-bar></header-bar>
   </el-header>
 
@@ -83,8 +83,11 @@ export default {
   
 }
 .el-main{
+  padding:0;
   height:calc(100vh - 140px);
   margin:0;
 }
-
+.el-header{
+  padding:0;
+}
 </style>

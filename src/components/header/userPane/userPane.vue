@@ -102,7 +102,7 @@ export default{
         this.$router.push({path:"/user/VIP"});
        },
        async logout(){
-        this.$request("logout");
+        this.$request("/logout");
         let result = await this.$checkLogin();
         if(!result){
             this.$message("退出成功");

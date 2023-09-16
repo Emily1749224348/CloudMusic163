@@ -6,6 +6,9 @@
 <script>
     export default{
         name:"recommend",
+        async created(){
+            
+        }
     }
 </script>
 <style>
